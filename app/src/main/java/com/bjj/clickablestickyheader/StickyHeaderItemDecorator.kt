@@ -129,9 +129,14 @@ class StickyHeaderItemDecorator<VH : RecyclerView.ViewHolder> {
     private fun findHeaderPosition(): Int? {
         val firstVisibleIndex =
             (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        val firstCompletelyVisibleIndex =
+            (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
         if (firstVisibleIndex == RecyclerView.NO_POSITION) return null
         for (i in firstVisibleIndex downTo 0) {
-            if (listener.isHeader(i)) return i
+            if (listener.isHeader(i)) {
+                if (i == firstCompletelyVisibleIndex) return null
+                return i
+            }
         }
         return null
     }
