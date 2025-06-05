@@ -30,7 +30,10 @@ class MainActivity : AppCompatActivity() {
             adapter,
             adapter
         )
-        adapter.submitList(getTestItems())
+        // Diff 처리 완료 후 ItemDecorator rebind 처리
+        adapter.submitList(getTestItems()) {
+            stickyHeaderItemDecorator.redrawHeader(refresh = true)
+        }
     }
 }
 
